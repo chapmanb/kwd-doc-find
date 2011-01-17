@@ -1,0 +1,4 @@
+gene12  gene34
+gene56
+
+
