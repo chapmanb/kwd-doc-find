@@ -34,13 +34,14 @@
         (str2/chomp)
         (str2/split #","))))
 
-(defn- file-lucene-map [id fname]
+(defn- file-lucene-map [id fname & [alt-fname]]
   "Preparse a clojure map with the contents of the file."
-  (-> {:id id
-       :text (str2/join " "
-                        [(last (str2/split fname #"/"))
-                         (slurp fname)])}
-      (with-meta {:text {:stored false :indexed true}})))
+  (let [short-name (if (nil? alt-fname)
+                     (last (str2/split fname #"/"))
+                     alt-fname)]
+    (-> {:id id
+         :text (str2/join " " [short-name (slurp fname)])}
+        (with-meta {:text {:stored false :indexed true}}))))
 
 (defn index-doc-file [index docfile]
   "Add index information from a high level document file."
