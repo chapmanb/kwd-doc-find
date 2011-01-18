@@ -10,9 +10,10 @@
             [clojure.contrib.str-utils2 :as str2]))
 
 (defn get-index [& [index-dir]]
-  (if (nil? index-dir)
-    (clucy/memory-index)
-    (clucy/disk-index index-dir)))
+  (binding [clucy/*optimize-frequency* 50]
+    (if (nil? index-dir)
+      (clucy/memory-index)
+      (clucy/disk-index index-dir))))
 
 (defn clear-index [index-dir]
   (if (fs/exists? index-dir)
@@ -46,8 +47,9 @@
 
 (defn index-doc-file [index docfile]
   "Add index information from a high level document file."
-  (with-open [rdr (reader docfile)]
-    (doseq [info (parse-doc-file rdr)]
-      (->> info
-           (apply file-lucene-map)
-           (clucy/add index)))))
+  (binding [clucy/*content* false]
+    (with-open [rdr (reader docfile)]
+      (doseq [info (parse-doc-file rdr)]
+        (->> info
+             (apply file-lucene-map)
+             (clucy/add index))))))

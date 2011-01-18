@@ -6,7 +6,7 @@
                  [ring/ring-jetty-adapter "0.3.5"]
                  [ring-json-params "0.1.3"]
                  [clj-json "0.3.1"]
-                 [clucy "0.1.0"]
+                 [org.clojars.chapmanb/clucy "0.2.0-SNAPSHOT"]
                  [clj-file-utils "0.2.1"]]
   :dev-dependencies [[swank-clojure "1.2.1"]]
   :run-aliases {:web kwd-doc-find.web})
