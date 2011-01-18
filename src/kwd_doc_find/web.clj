@@ -33,6 +33,6 @@
   (wrap-json-params kwd-doc-find-routes))
 
 ;; Entry point for running scripts.
-(defn -main [_ & [port]]
+(defn -main [& [port]]
   (run-jetty #'kwd-doc-find-app
              {:port (Integer/parseInt (or port "8081"))}))
