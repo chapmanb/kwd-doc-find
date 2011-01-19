@@ -20,12 +20,15 @@ This provides a simple REST-style interface for building an index and
 querying. The main input for index building is a document file; this
 comma separated file contains two required fields, an identifier and a
 path to the file. An optional third field can be specified with the
-filename to use for searching; if not specified the base name of the
-full file path will be used:
+filename and additional text to use for searching; if not specified
+the base name of the full file path will be used. The second file
+field can also be left blank to search only the additional text,
+instead of file contents:
 
         1,/your/home/file/path/toindex.txt
         2,/your/home/file/path/alsoindex.txt
         3,/your/home/file/path/dataset123.dat,real_file_name.txt
+        4,,only_index_the_name.txt
 
 The full text files and names are indexed, allowing retrieval by
 either in the search.

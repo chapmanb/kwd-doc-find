@@ -34,4 +34,5 @@
       (is (= '("1") (sorted-result-ids index "gene12"))))
     (testing "Using an alternative filename"
       (is (= '("1") (sorted-result-ids index "alternate*")))
-      (is (= '() (sorted-result-ids index "one*"))))))
+      (is (= '() (sorted-result-ids index "one*")))
+      (is (= '("3") (sorted-result-ids index "onlyindex*"))))))

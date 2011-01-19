@@ -39,11 +39,11 @@
   "Preparse a clojure map with the contents of the file."
   (let [short-name (if (nil? alt-fname)
                      (last (str2/split fname #"/"))
-                     alt-fname)]
-    (if (fs/exists? fname)
-      (-> {:id id
-           :text (str2/join " " [short-name (slurp fname)])}
-          (with-meta {:text {:stored false :indexed true}})))))
+                     alt-fname)
+        full-text (if (fs/exists? fname) (slurp fname) "")]
+    (-> {:id id
+         :text (str2/join " " [short-name full-text])}
+        (with-meta {:text {:stored false :indexed true}}))))
 
 (defn index-doc-file [index docfile]
   "Add index information from a high level document file."
