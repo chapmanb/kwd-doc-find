@@ -1,11 +1,9 @@
 ;; Full-text search powered by lucene.
-;;
-;; Works off of a high level doc-file which consists of a comma separated file
-;; of identifiers and files to parse.
 
 (ns kwd-doc-find.search
   (:use [clojure.java.io])
   (:require [clucy.core :as clucy]
+            [clojure-csv.core :as csv]
             [clj-file-utils.core :as fs]
             [clojure.contrib.str-utils2 :as str2]))
 
@@ -31,9 +29,7 @@
 (defn- parse-doc-file [rdr]
   "Extract identifiers and filenames from the top level docfile."
   (for [line (line-seq rdr)]
-    (-> line
-        (str2/chomp)
-        (str2/split #","))))
+    (first (csv/parse-csv line))))
 
 (defn- file-lucene-map [id fname & [alt-fname]]
   "Preparse a clojure map with the contents of the file."

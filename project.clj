@@ -7,6 +7,7 @@
                  [ring-json-params "0.1.3"]
                  [clj-json "0.3.1"]
                  [org.clojars.chapmanb/clucy "0.2.0-SNAPSHOT"]
+                 [clojure-csv "1.2.2"]
                  [clj-file-utils "0.2.1"]]
   :dev-dependencies [[swank-clojure "1.2.1"]]
   :run-aliases {:web kwd-doc-find.web})
