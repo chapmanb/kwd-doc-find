@@ -8,7 +8,7 @@
             [clojure.contrib.str-utils2 :as str2]))
 
 (defn get-index [& [index-dir]]
-  (binding [clucy/*optimize-frequency* 50]
+  (binding [clucy/*optimize-frequency* 200]
     (if (nil? index-dir)
       (clucy/memory-index)
       (clucy/disk-index index-dir))))
@@ -26,13 +26,8 @@
      (map #(:id %)
           (clucy/search index kwd max-results :text)))})
 
-(defn- parse-doc-file [rdr]
-  "Extract identifiers and filenames from the top level docfile."
-  (for [line (line-seq rdr)]
-    (first (csv/parse-csv line))))
-
 (defn- file-lucene-map [id fname & [alt-fname]]
-  "Preparse a clojure map with the contents of the file."
+  "Prepare a clojure map with the contents of the file."
   (let [short-name (if (nil? alt-fname)
                      (last (str2/split fname #"/"))
                      alt-fname)
@@ -45,7 +40,7 @@
   "Add index information from a high level document file."
   (binding [clucy/*content* false]
     (with-open [rdr (reader docfile)]
-      (doseq [info (parse-doc-file rdr)]
+      (doseq [info (map #(first (csv/parse-csv %)) (line-seq rdr))]
         (->> info
              (apply file-lucene-map)
              (clucy/add index))))))
